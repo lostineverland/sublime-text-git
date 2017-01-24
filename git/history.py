@@ -173,7 +173,15 @@ class GitGraphCommand(GitGraph, GitTextCommand):
 
 
 class GitGraphAllCommand(GitGraph, GitWindowCommand):
-    pass
+    def run(self, edit=None):
+        filename = self.get_file_name()
+        self.run_command(
+            ['git', 'log', '--graph', '--pretty=%h -%d (%cr) (%ci) <%an> %s', '--abbrev-commit', '--branches', '--remotes', '--no-color', '--decorate', '--date=relative', '--follow' if filename else None, '--', filename],
+            self.log_done
+        )
+
+    def log_done(self, result):
+        self.scratch(result, title="Git Log Graph Branches", syntax=plugin_file("syntax/Git Graph.tmLanguage"))
 
 
 class GitOpenFileCommand(GitLog, GitWindowCommand):

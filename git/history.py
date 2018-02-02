@@ -14,7 +14,7 @@ class GitBlameCommand(GitTextCommand):
         # -w: ignore whitespace changes
         # -M: retain blame when moving lines
         # -C: retain blame when copying lines between files
-        command = ['git', 'blame', '-w', '-M', '-C']
+        command = ['git', 'blame', '-w', '-M', '-C', '--abbrev=6']
         line_ranges = [self.get_lines(selection) for selection in self.view.sel() if not selection.empty()]
 
         if line_ranges:
